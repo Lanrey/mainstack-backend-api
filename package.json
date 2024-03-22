@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "tsc --resolveJsonModule",
+    "build": "NODE_ENV=production tsc --resolveJsonModule",
     "start": "npm run build && node dist/app.js"
   },
   "keywords": [],

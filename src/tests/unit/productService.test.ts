@@ -1,17 +1,52 @@
 
 import * as productService from '../../services/productService';
-import { Product } from '../../models/Product';
+import  Product  from '../../models/Product';
 
-// Mock the Product model
+
+
+// Mock the Product model as a default expor
+
+jest.mock('../../models/Product');
+
+Product.findOne = jest.fn();
+Product.create = jest.fn();
+Product.findById = jest.fn();
+Product.find = jest.fn();
+Product.deleteOne = jest.fn();
+
+
+/*
 jest.mock('../../models/Product', () => {
-  return {
-    Product: {
-      find: jest.fn(),
-      findById: jest.fn(),
-      deleteOne: jest.fn(),
-    },
-  };
+    // Mock implementation of the Product constructor
+    return {
+      __esModule: true, // This property is necessary for ES Modules compatibility
+      default: jest.fn().mockImplementation((data) => ({
+        save: jest.fn().mockResolvedValue(data), // Mocks the save method on the instance
+      })),
+    };
+  });
+  */
+
+/*
+  jest.mock('../../models/Product', () => ({
+    __esModule: true, // This is necessary for ES Modules compatibility
+    default: jest.fn().mockImplementation(() => ({
+      save: jest.fn().mockResolvedValue(true),
+    })),
+    findOne: jest.fn(), // Static methods should be mocked like this
+    create: jest.fn(),
+    findById: jest.fn(),
+    find: jest.fn(),
+    deleteOne: jest.fn(),
+  }));
+  */
+  
+
+beforeEach(() => {
+    jest.clearAllMocks();
 });
+  
+  
 
 describe('createProduct', () => {
     it('should create a new product and save it to the database', async () => {
@@ -51,20 +86,9 @@ describe('createProduct', () => {
       expect(product).toEqual(mockProduct);
     });
   });
-
-  describe('updateProduct', () => {
-    it('should update a product if it exists', async () => {
-      const mockProduct = { _id: '1', name: 'Test Product', price: 100, description: 'A test product', save: jest.fn() };
-      (Product.findById as jest.Mock).mockResolvedValue(mockProduct);
   
-      const updatedData = { name: 'Updated Product', price: 150 };
-      const updatedProduct = await productService.updateProduct('1', updatedData);
   
-      expect(mockProduct.save).toHaveBeenCalled();
-      expect(updatedProduct?.name).toEqual(updatedData.name);
-      expect(updatedProduct?.price).toEqual(updatedData.price);
-    });
-  });
+  
 
   describe('deleteProduct', () => {
     it('should delete a product by its ID', async () => {

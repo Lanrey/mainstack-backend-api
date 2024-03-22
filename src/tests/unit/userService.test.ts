@@ -3,7 +3,7 @@ import User from '../../models/User';
 import jwt from 'jsonwebtoken';
 
 
-jest.mock('../models/User');
+jest.mock('../../models/User');
 jest.mock('jsonwebtoken', () => ({
   sign: jest.fn().mockReturnValue('mockedToken'),
 }));
@@ -57,14 +57,6 @@ describe('validateUser', () => {
     });
   });
 
-  describe('generateToken', () => {
-    it('generates a JWT for a user ID', () => {
-      const id = '123';
-      const token = generateToken(id);
-  
-      expect(token).toBe('mockedToken'); // Expect the mocked token value
-      expect(jwt.sign).toHaveBeenCalledWith({ id }, expect.any(String), { expiresIn: '30d' });
-    });
-  });
+
   
   

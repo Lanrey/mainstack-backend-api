@@ -2,8 +2,8 @@
 import { Product } from "../models/Product";
 
 const createProduct = async (data: { name: string; price: number; description?: string }) => {
-    const product = new Product(data);
-    return await product.save();
+    //const product = new Product(data);
+    return await Product.create(data);
 };
 
 const getAllProducts = async () => {

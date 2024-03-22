@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction, ErrorRequestHandler} from 'ex
 import userRoutes from './routes/userRoutes'; 
 import productRoutes from './routes/productRoutes';
 import { errorHandler } from './middleware/errorMiddleware';
-import  connectDB  from '../src/database/db';
+import  connectDB  from './database/db';
 
 connectDB()
 const app = express();

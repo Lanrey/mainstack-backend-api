@@ -34,7 +34,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Installing NPM
-        run: npm install --omit=dev
+        run: npm install
 
       - name: Building application
         run: npm run build

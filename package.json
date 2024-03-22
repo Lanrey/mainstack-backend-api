@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc --resolveJsonModule",
-    "start": "node dist/app.js"
+    "start": "npm run build && node dist/app.js"
   },
   "keywords": [],
   "author": "",

@@ -1,15 +1,33 @@
-// src/app.ts
-import express from 'express';
+import express, { Request, Response, NextFunction, ErrorRequestHandler} from 'express';
+import userRoutes from './routes/userRoutes'; 
+import productRoutes from './routes/productRoutes';
+import { errorHandler } from './middleware/errorMiddleware';
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
+// Define a simple route to test that the server is running
 app.get('/', (req, res) => {
-    res.send('Hello, world!');
+    res.send('API is running...');
 });
 
+// Use the userRoutes with the /api/users prefix
+app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes)
+
+// Error handling middleware
+const errorHandlerFor500: ErrorRequestHandler = (err, _req, res, _next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+};
+
+app.use(errorHandlerFor500);
+app.use(errorHandler)
+
+
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is listening on port ${PORT}`);
 });
